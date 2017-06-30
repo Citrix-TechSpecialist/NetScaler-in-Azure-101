@@ -1014,85 +1014,249 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><title>README</title></head><body><article class="markdown-body"><h1 id="module1-netscaler-instantiation"><a name="user-content-module1-netscaler-instantiation" href="#module1-netscaler-instantiation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Module1: NetScaler Instantiation</h1>
-<h2 id="module-overview"><a name="user-content-module-overview" href="#module-overview" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Module Overview</h2>
-<p>In this module you will login to your Azure account and instantiate a NetScaler VPX for us in Application Delivery for HTTPS Encryption Offload, TCP Proxy, Load Balancing and Content Switching, Rewrite, VPN, ICA Proxy, Web Logging, Content Switching, Content Filtering, Responder, HTML Injection, Web Interface on NS, and AppFlow.</p>
-<p>Our latest software for NetScaler is 11.1, and the associated and most current documentation for NetScaler VPX on Azure is available on this link:<a href="https://docs.citrix.com/en-us/netscaler/11-1/deployingvpx/deploy-vpx-on-azure.html"> <a href="https://docs.citrix.com/en-us/netscaler/11-1/deployingvpx/deploy-vpx-on-azure.html"><a href="https://docs.citrix.com/en-us/netscaler/11-1/deployingvpx/deploy-vpx-on-azure.html">https://docs.citrix.com/en-us/netscaler/11-1/deployingvpx/deploy-vpx-on-azure.html</a></a></a></p>
-<p>The NetScaler VPX virtual appliance is available as an image in the Microsoft Azure Marketplace. NetScaler VPX on Microsoft Azure Resource Manager (ARM) enables customers to leverage Azure cloud computing capabilities and use NetScaler load balancing and traffic management features for their business needs. You can deploy NetScaler VPX instances on Azure Resource Manager either as standalone instances or as high availability pairs in active-active or active-standby modes.</p>
-<p>In ARM, a NetScaler VPX virtual machine (VM) resides in a virtual network. A virtual Network Interface Card (NIC) is created on each NetScaler VM. The network security group (NSG) configured in the virtual network is bound to the NIC, and together they control the traffic flowing into the VM and out of the VM. </p>
-<p>The NSG forwards the requests to the NetScaler VPX instance, and the VPX instance sends them to the servers. The response from a server follows the same path in reverse. The NSG can be configured to control a single VPX VM, or, with subnets and virtual networks, can control traffic in multiple VPX VM deployment. </p>
-<p>The NIC contains network configuration details such as the virtual network, subnets, internal IP address, and Public IP address.</p>
-<p>While on ARM, it is good to know the following IP addresses used to access the VMs:</p>
+</style><title>README</title></head><body><article class="markdown-body"><h1 id="module-2-azure-prerequisite-configs-for-netscaler"><a name="user-content-module-2-azure-prerequisite-configs-for-netscaler" href="#module-2-azure-prerequisite-configs-for-netscaler" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Module 2: Azure Prerequisite Configs for NetScaler</h1>
+<h2 id="overview"><a name="user-content-overview" href="#overview" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Overview</h2>
+<p>Provision a single instance of NetScaler VPX in ARM portal in a standalone mode by creating the virtual machine and configuring other resources.</p>
+<h3 id="in-this-excercise-you-will"><a name="user-content-in-this-excercise-you-will" href="#in-this-excercise-you-will" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>In this excercise you will:</h3>
 <ul>
 <li>
-<p>Public IP (PIP) address is the Internet-facing IP address configured directly on the virtual NIC of the NetScaler VM. This allows you to directly access a VM from the external network without the need to configure inbound and outbound rules on the NSG.</p>
+<p>Configure a resource group</p>
 </li>
 <li>
-<p>NetScaler IP (NSIP) address is internal IP address configured on the VM. It is non-routable.</p>
+<p>Configure a network security group</p>
 </li>
 <li>
-<p>Virtual IP address (VIP) is configured by using the NSIP and a port number. Clients access NetScaler services through the PIP address, and when the request reaches the NIC of the NetScaler VPX VM or the Azure load balancer, the VIP gets translated to internal IP (NSIP) and internal port number.</p>
+<p>Configure virtual network and its subnets</p>
 </li>
-<li>Internal IP address is the private internal IP address of the VM from the virtual network’s address space pool. This IP address cannot be reached from the external network. This IP address is by default dynamic unless you set it to static. Traffic from the internet is routed to this address according to the rules created on the NSG. The NSG works with the NIC to selectively send the right type of traffic to the right port on the NIC, which depends on the services configured on the VM. </li>
+<li>
+<p>Configure a storage account</p>
+</li>
+<li>
+<p>Configure an availability set</p>
+</li>
 </ul>
-<p>In this document, PIP, VIP, and Instance Level PIP (ILPIP) mean the same thing and are used interchangeably. </p>
-<p>The following figure shows how traffic flows from a client to a server through a NetScaler VPX instance provisioned in ARM.</p>
-<p><img alt="" src="./Module1/Images/img1" /></p>
-<h2 id="how-netscaler-vpx-works-on-azure"><a name="user-content-how-netscaler-vpx-works-on-azure" href="#how-netscaler-vpx-works-on-azure" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How NetScaler VPX Works on Azure</h2>
-<p>In an on-premises deployment, a NetScaler VPX instance requires, at least three IP addresses:</p>
+<p>Estimated time to complete this exercise: 40 minutes</p>
+<h3 id="before-you-begin"><a name="user-content-before-you-begin" href="#before-you-begin" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Before You Begin</h3>
+<p>Make sure that you have the following:</p>
 <ul>
 <li>
-<p>Management IP address, called the NetScaler IP (NSIP) address</p>
+<p>A Microsoft Azure user account </p>
 </li>
 <li>
-<p>Subnet IP (SNIP) address for communicating with the server farm</p>
+<p>Access to Microsoft Azure Resource Manager </p>
 </li>
 <li>
-<p>Virtual server IP (VIP) address for accepting client requests</p>
+<p>Microsoft Azure SDK (optional)</p>
+</li>
+<li>
+<p>Microsoft Azure PowerShell (optional) <a href="https://docs.citrix.com/en-us/netscaler/11-1/deploying-vpx/deploy-vpx-onazure/vpx-azure-appendix.html"><a href="https://docs.citrix.com/en-us/netscaler/11-1/deploying-vpx/deploy-vpx-onazure/vpx-azure-appendix.html"><a href="https://docs.citrix.com/en-us/netscaler/11-1/deploying-vpx/deploy-vpx-onazure/vpx-azure-appendix.html">https://docs.citrix.com/en-us/netscaler/11-1/deploying-vpx/deploy-vpx-onazure/vpx-azure-appendix.html</a></a></a> </p>
 </li>
 </ul>
-<p>In an Azure deployment, only one IP address is assigned to an instance during provisioning through DHCP, and it is a private (internal) address.</p>
-<p>Although you can provision a NetScaler VPX instance in Azure with multiple NICs, the multiple NIC feature has a few constraints that might make the instance unresponsive. For details about this constraint, see <a href="http://docs.citrix.com/en-us/netscaler/10-5/vpx/deploy-vpx-on-azure.html">Limitations and Usage Guidelines</a></p>
-<p>To avoid this limitation, you can deploy NetScaler VPX instance in Azure with a single IP architecture, where the three IP functions of a NetScaler appliance are multiplexed onto one IP address. This single IP address uses different port numbers to function as the NSIP, SNIP, and VIP. </p>
-<p>The following image illustrates how a single IP address is used to perform the functions of NSIP, SNIP, and VIP.</p>
-<p><img alt="" src="./Images/img2" /></p>
-<h3 id="note"><a name="user-content-note" href="#note" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Note:</h3>
-<p>The single IP mode is available only in Azure deployments. This mode is not available for a NetScaler VPX instance on your premises, on AWS, or in in other type of deployment.</p>
-<h2 id="traffic-flow-through-port-address-translation"><a name="user-content-traffic-flow-through-port-address-translation" href="#traffic-flow-through-port-address-translation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Traffic Flow through Port Address Translation</h2>
-<p>In an Azure deployment, when you provision the NetScaler VPX instance as a virtual machine (VM), Azure assigns a Public IP address and an internal IP address (non-routable) to the NetScaler virtual machine. Inbound and Outbound rules are defined on the NSG for the NetScaler instance, along with a public port and a private port for each rule defined. The NetScaler instance listens on the internal IP address and private port. </p>
-<p>Any external request is received on the NetScaler VPX VM&rsquo;s virtual NIC. The NIC is bound to the NSG, which specifies the private IP and private port combination into which to translate the request&rsquo;s destination address and port (the Public IP address and port). ARM performs port address translation (PAT) to map the Public IP address and port to the internal IP address and private port of the NetScaler virtual machine, and forwards the traffic to the virtual machine. </p>
-<p>The following figure shows how Azure performs port address translation to direct traffic to the NetScaler internal IP address and private port. </p>
-<p><img alt="" src="./Images/img3" /></p>
-<p>In this example, the Public IP address assigned to the VM is 140.x.x.x, and the internal IP address is 10.x.x.x. When the inbound and outbound rules are defined, public HTTP port 80 is defined as the port on which the client requests are received, and a corresponding private port, 10080, is defined as the port on which the NetScaler virtual machine listens. The client request is received on the Public IP address 140.x.x.x at port 80. Azure performs port address translation to map this address and port to internal IP address 10.x.x.x on private port 10080 and forwards the client request.</p>
-<p>For information about port usage guidelines while, see <a href="http://docs.citrix.com/en-us/netscaler/10-5/vpx/deploy-vpx-on-azure.html">Port Usage Guidelines</a>.</p>
-<p>For information about NSG and access control lists, see <a href="https://azure.microsoft.com/enin/documentation/articles/virtual-networks-nsg/"><a href="https://azure.microsoft.com/enin/documentation/articles/virtual-networks-nsg/"><a href="https://azure.microsoft.com/enin/documentation/articles/virtual-networks-nsg/">https://azure.microsoft.com/enin/documentation/articles/virtual-networks-nsg/</a></a></a>.   </p>
-<h2 id="traffic-flow-through-network-address-translation"><a name="user-content-traffic-flow-through-network-address-translation" href="#traffic-flow-through-network-address-translation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Traffic Flow Through Network Address Translation</h2>
-<p>You can also request a Public IP (PIP) address for your NetScaler virtual machine (instance level). If you use this direct PIP at the VM level, you need not define inbound and outbound rules to intercept the network traffic. The incoming request from the Internet is received on the VM directly. Azure performs network address translation (NAT) and forwards the traffic to the internal IP address of the NetScaler instance.</p>
-<p>The following figure shows how Azure performs network address translation to map the NetScaler internal IP address. </p>
-<p><img alt="" src="./Images/Traffic" title="Flow Through Network Address Translation" /></p>
-<p>In this example, the Public IP assigned to the NSG is 140.x.x.x and the internal IP address is 10.x.x.x. When the inbound and outbound rules are defined, public HTTP port 80 is defined as the port on which the client requests are received, and a corresponding private port, 10080, is defined as the port on which the NetScaler virtual machine listens. The client request is received on the Public IP address (140.x.x.x). Azure performs network address translation to map the PIP to the internal IP address 10.x.x.x on port 10080, and forwards the client request. </p>
-<h3 id="note_1"><a name="user-content-note_1" href="#note_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Note</h3>
-<p>NetScaler VPX VMs in high availability are controlled by external or internal load balancers that have inbound rules defined on them to control the load balancing traffic. The external traffic is first intercepted by these load balancers and the traffic is diverted according to the load balancing rules configured, which has backend pools, NAT rules, and health probes defined on the load balancers.</p>
-<h2 id="port-usage-guidelines"><a name="user-content-port-usage-guidelines" href="#port-usage-guidelines" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Port Usage Guidelines</h2>
-<p>You can configure additional inbound and outbound rules n NSG while creating the NetScaler virtual machine or after the virtual machine is provisioned. Each inbound and outbound rule is associated with a public port and a private port. </p>
-<p>Before configuring NSG rules, note the following guidelines regarding the port numbers you can use:</p>
+<h3 id="virtual-machines-required-for-this-module"><a name="user-content-virtual-machines-required-for-this-module" href="#virtual-machines-required-for-this-module" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Virtual Machines Required For This Module</h3>
+<p><strong> Citrix NetScaler VPX Bring Your Own License</strong></p>
+<h3 id="step-by-step-guidance"><a name="user-content-step-by-step-guidance" href="#step-by-step-guidance" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Step by Step Guidance</h3>
+<ol>
+<li>On the Microsoft Azure Portal page (<a href="https://portal.azure.com">https://portal.azure.com</a>), log on to the Azure Resource Manager portal by providing your user name and password. (In the ARM portal, clicking an option in one pane opens a new pane to the right. Navigate from one pane to another to configure your device.)</li>
+</ol>
+<h3 id="configuring-a-resource-group"><a name="user-content-configuring-a-resource-group" href="#configuring-a-resource-group" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Configuring a Resource Group**</h3>
 <ol>
 <li>
-<p>The following ports are reserved by the NetScaler virtual machine. You cannot define these as private ports when using the Public IP address for requests from the Internet.  Ports 21, 22, 80, 443, 8080, 67, 161, 179, 500, 520, 3003, 3008, 3009, 3010, 3011, 4001, 5061, 9000, 7000. </p>
-<p>However, if you want Internet-facing services such as the VIP to use a standard port (for example, port 443) you have to create port mapping by using the NSG. The standard port is then mapped to a different port that is configured on the NetScaler for this VIP service. </p>
-<p>For example, a VIP service might be running on port 8443 on the NetScaler instance but be mapped to public port 443. So, when the user accesses port 443 through the Public IP, the request is actually directed to private port 8443.</p>
+<p>Create a new resource group that is a container for all your resources. Use the resource group to deploy, manage, and monitor your resources as a group.</p>
+<p>Click <strong> New </strong> and search for <strong> resource group</strong></p>
+<p><img alt="" src="./Images/Configuring" title="a Resource Group" /></p>
 </li>
 <li>
-<p>Public IP address does not support protocols in which port mapping is opened dynamically, such as passive FTP or ALG.</p>
+<p>Select the &ldquo;Resource group&rdquo; item.</p>
+<p><img alt="" src="./Images/Select" title="Resource Group Item" /></p>
 </li>
 <li>
-<p>Azure load balancer does not work with Public IP address. High availability does not work for traffic that uses PIP associated with VPX instance instead of PIP configured on the load balancer. For more information about configuring NetScaler VPX HA in ARM, see <a href="https://docs.citrix.com/en-us/netscaler/11/getting-started-with-vpx/deploy-vpx-on-azure/configure-ha-vpx-azure.html">Configuring NetScaler VPX in High Availability Mode in Azure</a>. </p>
+<p>Click Create.</p>
+<p><img alt="" src="./Images/Click" title="Create" /></p>
 </li>
 <li>
-<p>In a NetScaler Gateway deployment, you need not configure a SNIP address, because the NSIP can be used as a SNIP when no SNIP is configured. You must configure the VIP address by using the NSIP address and some nonstandard port number. For call-back configuration on the backend server, the VIP port number has to be specified along with the VIP URL (for example, “https://gatewayFQDN:port”). </p>
+<p>In the <strong> Resource group</strong> pane, enter the following details:</p>
+<ul>
+<li>
+<p>Resource group name</p>
+</li>
+<li>
+<p>Resource group location</p>
+</li>
+</ul>
+<p>Click <strong> Create</strong>.</p>
+<p><img alt="" src="./Images/Resource" title="Group Enter Details" /> </p>
+<p>&hellip;and your Resource group is shown:</p>
+<p><img alt="" src="./Images/Show" title="Resource Group" /> </p>
 </li>
 </ol>
-<h3 id="note_2"><a name="user-content-note_2" href="#note_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Note:</h3>
-<p>In ARM, a NetScaler VPX VM is associated with two IP addresses. Public IP address and Internal IP address. While the external traffic connects to the PIP, the internal IP address or the NSIP is nonroutable. To configure VIP in VPX, use this combination of internal IP address and port number.</p>
-<h3 id="example"><a name="user-content-example" href="#example" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Example:</h3>
-<p>If the VPN virtual server FQDN is vip.test.com, and the VPN virtual server is running on port 8443, the call-back URL will be: <a href="https://vip.test.com:8443">https://vip.test.com:8443</a>. </p></article></body></html>
+<h3 id="configuring-a-network-security-group"><a name="user-content-configuring-a-network-security-group" href="#configuring-a-network-security-group" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Configuring a Network Security Group</h3>
+<ol>
+<li>
+<p>Create a network security group (NSG) to assign inbound and outbound rules to control the incoming and outgoing traffic within the virtual network. NSG allows you to define security rules for a single virtual machine and also to define security rules for a virtual network subnet.</p>
+<p>Click <strong> New</strong> and search on <strong>network security group</strong>.</p>
+<p><img alt="" src="./Images/Configure" title="Network Security Group 1" /></p>
+<p>Select the Network security group </p>
+<p><img alt="" src="./Images/Select" title="Network Security Group" /></p>
+</li>
+<li>
+<p>Click Create.</p>
+<p><img alt="" src="./Images/Create" title="Network Security Group" /></p>
+</li>
+<li>
+<p>In the <strong> Create network security group</strong> pane, enter the following details, and then click <strong> Create</strong>. </p>
+<ul>
+<li>
+<p>Name – type a name for the security group</p>
+</li>
+<li>
+<p>Resource group – select the resource group from the drop-down list</p>
+</li>
+</ul>
+<p>Click <strong> Create</strong>.</p>
+<p><img alt="" src="./Images/Network" title="Security Group Enter Details" /></p>
+<p>&hellip;and your Network security group is shown.</p>
+<p><img alt="" src="./Images/Show" title="Network Security Group" /></p>
+</li>
+</ol>
+<h3 id="configuring-a-virtual-network-and-subnets"><a name="user-content-configuring-a-virtual-network-and-subnets" href="#configuring-a-virtual-network-and-subnets" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Configuring a Virtual Network and Subnets</h3>
+<ol>
+<li>
+<p>Virtual networks in ARM provide a layer of security and isolation to your services. VMs and services that are part of the same virtual network can access each other. For example, create a virtual network with a reserved CIDR block of 192.168.0.0/16 and two subnets having CIDR blocks as 192.168.1.0/24 and 192.168.2.0/24 respectively.</p>
+<p>NetScaler uses only 1 IP at this time and will not leverage the multiple Subnets in this lab, but it is good for Azure familiarity to proceed.</p>
+<p>Click <strong>New &gt; Networking &gt; Virtual Network</strong></p>
+<p><img alt="" src="./Images/New" title="Virtual Network" /></p>
+<p>In the <strong> Virtual Network</strong> pane, select <strong> Resource Manager</strong> from the drop-down list and click <strong> Create</strong>.</p>
+<p><img alt="" src="./Images/Create" title="Virtual Network" /></p>
+</li>
+<li>
+<p>In the <strong> Create virtual network pane</strong>, enter the following values, and then click <strong> Create</strong>.</p>
+<ul>
+<li>
+<p>Name of the virtual network</p>
+</li>
+<li>
+<p>Address space – type the reserved IP address block for the virtual network</p>
+</li>
+<li>
+<p>Subnet – type the name of the first subnet (you will create the second subnet later in this step)</p>
+</li>
+<li>
+<p>Subnet address range – type the reserved IP address block of the subnet</p>
+</li>
+<li>
+<p>Resource group – select the resource group created earlier from the drop-down list</p>
+</li>
+</ul>
+<p><img alt="" src="./Images/Enter" title="Virtual Network Details" /></p>
+</li>
+<li>
+<p>Deployment Succeeded. Click Subnets for the next step.</p>
+<p><img alt="" src="./Images/Click" title="Subnets" /></p>
+</li>
+<li>
+<p><strong> Configuring the second subnet</strong></p>
+<p>Select the newly created virtual network from All resources pane.</p>
+<p><img alt="" src="./Images/Select" title="Newly Created Virtual Network" /></p>
+<p>and in the <strong> Settings pane</strong>, click <strong> Subnets</strong>.</p>
+<p><img alt="" src="./Images/Click" title="Subnets 2" /></p>
+</li>
+<li>
+<p>Click <strong> +Subnet</strong></p>
+<p><img alt="" src="./Images/Click" title="+Subnet" /></p>
+<p>Create the second subnet by entering the following details:</p>
+<ul>
+<li>
+<p>Name of the second subnet</p>
+</li>
+<li>
+<p>Address range – type the Reserved IP address block of the second subnet</p>
+</li>
+<li>
+<p>Network security group – select the NSG from the drop-down list</p>
+</li>
+</ul>
+<p><img alt="" src="./Images/Second" title="Subnet Details" /></p>
+<p>&hellip; and it appears in the list.</p>
+<p><img alt="" src="./Images/Second" title="Subnet Appears" /> </p>
+</li>
+</ol>
+<h3 id="configuring-a-storage-account"><a name="user-content-configuring-a-storage-account" href="#configuring-a-storage-account" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Configuring a Storage Account</h3>
+<ol>
+<li>
+<p>The ARM IaaS infrastructure storage includes all services where we can store data in the form of blobs, tables, queues, and files. You can also create applications using these forms of storage data in ARM.</p>
+<p>Create a storage account to store all your data.</p>
+<p>Click <strong> +New &gt; Storage &gt; Storage account</strong>.</p>
+<p><img alt="" src="./Images/New" title="Storage Account" /></p>
+</li>
+<li>
+<p>In the Create storage account pane, enter the following details:</p>
+<ul>
+<li>
+<p>Name of the account</p>
+</li>
+<li>
+<p>Deployment mode – make sure to select Resource Manager</p>
+</li>
+<li>
+<p>Account kind – select General purpose from the drop-down list</p>
+</li>
+<li>
+<p>Replication – select Locally redundant storage from the drop-down list</p>
+</li>
+<li>
+<p>Resource group – select the newly created resource group from the drop-down list</p>
+</li>
+<li>
+<p>Performance – Premium (NetScaler VPX requires Premium to provision)</p>
+</li>
+</ul>
+<p>Click <strong> Create</strong>.</p>
+<p><img alt="" src="./Images/Enter" title="Storage Account Details" /></p>
+<p>The storage account will appear when complete</p>
+<p><img alt="" src="./Images/Complete" title="Storage Account" /></p>
+</li>
+</ol>
+<h3 id="configuring-an-availability-set"><a name="user-content-configuring-an-availability-set" href="#configuring-an-availability-set" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Configuring an Availability Set</h3>
+<ol>
+<li>
+<p>An availability set guarantees that at least one VM is kept up and running in case of planned or unplanned maintenance. Two or more VMs under the same ‘availability set’ can be placed on different fault domains to achieve redundant services.</p>
+<p>Click <strong> +New</strong> and search for availability set. </p>
+<p><img alt="" src="./Images/New" title="Availability Set" /></p>
+<p>Select <strong> Availability set</strong> entity from the list. Click <strong> Create</strong>.</p>
+<p><img alt="" src="./Images/Create" title="Availability Set" /></p>
+</li>
+<li>
+<p>In the Create availability set pane, enter the following details:</p>
+<ul>
+<li>
+<p>Name of the set</p>
+</li>
+<li>
+<p>Resource group – select the newly created resource group from the drop-down list</p>
+</li>
+</ul>
+<p>Click <strong> Create</strong>.</p>
+<p><img alt="" src="./Images/Enter" title="Availability Set Details" /></p>
+<p>The Availability set will appear when complete.</p>
+<p><img alt="" src="./Images/Complete" title="Availability Set" /></p>
+</li>
+</ol>
+<h3 id="module-summary"><a name="user-content-module-summary" href="#module-summary" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Module Summary</h3>
+<p>You have the Azure Environment ready and have:</p>
+<ul>
+<li>
+<p>Configured a resource group </p>
+</li>
+<li>
+<p>Configured a network security group </p>
+</li>
+<li>
+<p>Configured virtual network and its subnets </p>
+</li>
+<li>
+<p>Configured a storage account </p>
+</li>
+<li>
+<p>Configured an availability set </p>
+</li>
+</ul></article></body></html>
