@@ -72,7 +72,7 @@ Make sure that you have the following:
 
 1.  Create a network security group (NSG) to assign inbound and outbound rules to control the incoming and outgoing traffic within the virtual network. NSG allows you to define security rules for a single virtual machine and also to define security rules for a virtual network subnet.
 
-    Click ** New** and search on **network security group**.
+    Click **New** and search on **network security group**.
 
     ![](./Images/Configure Network Security Group 1)
 
