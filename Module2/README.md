@@ -195,11 +195,11 @@ Make sure that you have the following:
 
 1. An availability set guarantees that at least one VM is kept up and running in case of planned or unplanned maintenance. Two or more VMs under the same ‘availability set’ can be placed on different fault domains to achieve redundant services.
 
-    Click ** +New** and search for availability set. 
+    Click **+New** and search for availability set. 
 
     ![](./Images/New Availability Set)
 
-    Select ** Availability set** entity from the list. Click ** Create**.
+    Select **Availability set** entity from the list. Click **Create**.
 
     ![](./Images/Create Availability Set)
 
