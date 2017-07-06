@@ -5,9 +5,9 @@
 ### [Lab Environment Details](./)
 ### [Lab Scenario - Configuring NetScaler VPX in a Standalone mode in Microsoft Azure Resource Manager](./)
 ## [Module 1: NetScaler Instantiation](./)
-### [How NetScaker VPX Works on Azure](./)
-### [Traffic Flow through Port Address Translation](./)
-### [Traffic Flow Through Network Address Translation](./)
+### How NetScaler VPX Works on Azure
+### Traffic Flow through Port Address Translation
+### Traffic Flow Through Network Address Translation
 ### [Port Usage Guidlelines](./)
 ## [Module 2: Azure Prerequisite Configs for NetScaler](./)
 ###  [Configuring a Resource Group](./)

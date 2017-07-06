@@ -32,27 +32,27 @@ Make sure that you have the following:
 
 ### Virtual Machines Required For This Module
 
-** Citrix NetScaler VPX Bring Your Own License**
+**Citrix NetScaler VPX Bring Your Own License**
 
 ### Step by Step Guidance
 
-1.  On the Microsoft Azure Portal page (https://portal.azure.com), log on to the Azure Resource Manager portal by providing your user name and password. (In the ARM portal, clicking an option in one pane opens a new pane to the right. Navigate from one pane to another to configure your device.)
+1. On the Microsoft Azure Portal page (https://portal.azure.com), log on to the Azure Resource Manager portal by providing your user name and password. (In the ARM portal, clicking an option in one pane opens a new pane to the right. Navigate from one pane to another to configure your device.)
 
 ### Configuring a Resource Group**
 
 1.  Create a new resource group that is a container for all your resources. Use the resource group to deploy, manage, and monitor your resources as a group.
 
-    Click ** New ** and search for ** resource group**
+    Click **New** and search for **resource group**
 
-    ![](./Images/Configuring a Resource Group)
+    ![](./Images/Configuring\ a\ Resource\ Group.png)
 
 2.  Select the "Resource group" item.
 
-    ![](./Images/Select Resource Group Item)
+    ![](./Images/Select\ Resource\ Group\ Item.png)
 
 3. Click Create.
 
-    ![](./Images/Click Create)
+    ![](./Images/Click\ Create)
 
 4. In the ** Resource group** pane, enter the following details:
 

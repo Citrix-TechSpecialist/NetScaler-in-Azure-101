@@ -27,7 +27,7 @@ In this document, PIP, VIP, and Instance Level PIP (ILPIP) mean the same thing a
 
 The following figure shows how traffic flows from a client to a server through a NetScaler VPX instance provisioned in ARM.
 
-![](./Module1/Images/img1)
+![](Images/img1.PNG)
 
 ##How NetScaler VPX Works on Azure
 
