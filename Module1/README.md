@@ -1,5 +1,7 @@
 # Module1: NetScaler Instantiation
 
+Go Back to [Table of Contents](../)
+
 ## Module Overview
 
 In this module you will login to your Azure account and instantiate a NetScaler VPX for us in Application Delivery for HTTPS Encryption Offload, TCP Proxy, Load Balancing and Content Switching, Rewrite, VPN, ICA Proxy, Web Logging, Content Switching, Content Filtering, Responder, HTML Injection, Web Interface on NS, and AppFlow.

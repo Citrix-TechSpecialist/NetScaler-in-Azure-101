@@ -1,5 +1,7 @@
 # Module 2: Azure Prerequisite Configs for NetScaler
 
+Go Back to [Table of Contents](../)
+
 ## Overview
 
 Provision a single instance of NetScaler VPX in ARM portal in a standalone mode by creating the virtual machine and configuring other resources.
