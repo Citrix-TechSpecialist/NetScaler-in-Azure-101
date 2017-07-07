@@ -16,7 +16,7 @@ Provision a single instance of NetScaler VPX in ARM portal in a standalone mode 
 
 * Configure an availability set
 
-Estimated time to complete this exercise: 40 minutes
+**Estimated time to complete this exercise:** 40 minutes
 
 ### Before You Begin
 
@@ -36,23 +36,23 @@ Make sure that you have the following:
 
 ### Step by Step Guidance
 
-1. On the Microsoft Azure Portal page (https://portal.azure.com), log on to the Azure Resource Manager portal by providing your user name and password. (In the ARM portal, clicking an option in one pane opens a new pane to the right. Navigate from one pane to another to configure your device.)
+On the Microsoft Azure Portal page (https://portal.azure.com), log on to the Azure Resource Manager portal by providing your user name and password. (In the ARM portal, clicking an option in one pane opens a new pane to the right. Navigate from one pane to another to configure your device.)
 
-### Configuring a Resource Group**
+### Configuring a Resource Group
 
-1.  Create a new resource group that is a container for all your resources. Use the resource group to deploy, manage, and monitor your resources as a group.
+1. Create a new resource group that is a container for all your resources. Use the resource group to deploy, manage, and monitor your resources as a group.
 
     Click **New** and search for **resource group**
 
-    ![](./Images/Configuring\ a\ Resource\ Group.png)
+    ![](./Images/ConfiguringaResourceGroup.png) 
 
 2.  Select the "Resource group" item.
 
-    ![](./Images/Select\ Resource\ Group\ Item.png)
+    ![](./Images/SelectResourceGroupItem.png)
 
 3. Click Create.
 
-    ![](./Images/Click\ Create)
+    ![](./Images/ClickCreate.PNG)
 
 4. In the ** Resource group** pane, enter the following details:
 
@@ -62,11 +62,11 @@ Make sure that you have the following:
 
     Click ** Create**.
 
-    ![](./Images/Resource Group Enter Details) 
+    ![](./Images/ResourceGroupEnterDetails.PNG) 
 
     ...and your Resource group is shown:
 
-    ![](./Images/Show Resource Group) 
+    ![](./Images/ShowResourceGroup.PNG) 
 
 ### Configuring a Network Security Group
 
@@ -74,15 +74,15 @@ Make sure that you have the following:
 
     Click **New** and search on **network security group**.
 
-    ![](./Images/Configure Network Security Group 1)
+    ![](./Images/ConfigureNetworkSecurityGroup1.PNG)
 
     Select the Network security group 
 
-    ![](./Images/Select Network Security Group)
+    ![](./Images/SelectNetworkSecurityGroup.PNG)
 
 2.  Click Create.
 
-    ![](./Images/Create Network Security Group)
+    ![](./Images/CreateNetworkSecurityGroup.PNG)
 
 3.  In the ** Create network security group** pane, enter the following details, and then click ** Create**. 
 
@@ -92,11 +92,11 @@ Make sure that you have the following:
 
      Click ** Create**.
 
-     ![](./Images/Network Security Group Enter Details)
+     ![](./Images/NetworkSecurityGroupEnterDetails.PNG)
 
      ...and your Network security group is shown.
 
-     ![](./Images/Show Network Security Group)
+     ![](./Images/ShowNetworkingSecurityGroup.PNG)
 
 ### Configuring a Virtual Network and Subnets
 
@@ -106,11 +106,11 @@ Make sure that you have the following:
 
     Click **New > Networking > Virtual Network**
 
-    ![](./Images/New Virtual Network)
+    ![](./Images/NewVirtualNetwork.PNG)
 
-    In the ** Virtual Network** pane, select ** Resource Manager** from the drop-down list and click ** Create**.
+    In the **Virtual Network** pane, select **Resource Manager** from the drop-down list and click **Create**.
 
-    ![](./Images/Create Virtual Network)
+    ![](./Images/CreateVirtualNetwork.PNG)
 
 2. In the ** Create virtual network pane**, enter the following values, and then click ** Create**.
 
@@ -124,25 +124,25 @@ Make sure that you have the following:
 	
 	* Resource group – select the resource group created earlier from the drop-down list
 
-	![](./Images/Enter Virtual Network Details)
+	![](./Images/EnterVirtualNetworkDetails.PNG)
 
 3. Deployment Succeeded. Click Subnets for the next step.
 
-    ![](./Images/Click Subnets)
+    ![](./Images/ClickSubnets.PNG)
 
-4.  ** Configuring the second subnet**
+4.  **Configuring the second subnet**
 
     Select the newly created virtual network from All resources pane.
 
-    ![](./Images/Select Newly Created Virtual Network)
+    ![](./Images/SelectNewlyCreatedVirtualNetwork.PNG)
 
-    and in the ** Settings pane**, click ** Subnets**.
+    and in the **Settings pane**, click **Subnets**.
 
-    ![](./Images/Click Subnets 2)
+    ![](./Images/ClickSubnets2.PNG)
 
-5. Click ** +Subnet**
+5. Click **+Subnet**
 
-    ![](./Images/Click +Subnet)
+    ![](./Images/Click+Subnet.PNG)
 
 
     Create the second subnet by entering the following details:
@@ -153,11 +153,11 @@ Make sure that you have the following:
 
 	 * Network security group – select the NSG from the drop-down list
 
-	 ![](./Images/Second Subnet Details)
+	 ![](./Images/SecondSubnetDetails.PNG)
 
 	 ... and it appears in the list.
 
-	 ![](./Images/Second Subnet Appears) 
+	 ![](./Images/SecondSubnetAppears.PNG) 
 
 ### Configuring a Storage Account
 
@@ -165,9 +165,9 @@ Make sure that you have the following:
 
     Create a storage account to store all your data.
 
-    Click ** +New > Storage > Storage account**.
+    Click **+New > Storage > Storage account**.
 
-    ![](./Images/New Storage Account)
+    ![](./Images/NewStorageAccount.PNG)
 
 2.  In the Create storage account pane, enter the following details:
 
@@ -183,13 +183,13 @@ Make sure that you have the following:
       
       * Performance – Premium (NetScaler VPX requires Premium to provision)
 
-    Click ** Create**.
+    Click **Create**.
 
-    ![](./Images/Enter Storage Account Details)
+    ![](./Images/EnterStorageAccountDetails.PNG)
 
     The storage account will appear when complete
 
-    ![](./Images/Complete Storage Account)
+    ![](./Images/CompleteStorageAccount.PNG)
 
 ### Configuring an Availability Set
 
@@ -197,24 +197,25 @@ Make sure that you have the following:
 
     Click **+New** and search for availability set. 
 
-    ![](./Images/New Availability Set)
+    ![](./Images/NewAvailabilitySet.PNG)
 
     Select **Availability set** entity from the list. Click **Create**.
 
-    ![](./Images/Create Availability Set)
+    ![](./Images/CreateAvailabilitySet.PNG)
 
 2. In the Create availability set pane, enter the following details:
+
      * Name of the set
 
      * Resource group – select the newly created resource group from the drop-down list
 
-    Click ** Create**.
+    Click **Create**.
 
-    ![](./Images/Enter Availability Set Details)
+    ![](./Images/EnterAvailabilitySetDetails.PNG)
 
     The Availability set will appear when complete.
 
-    ![](./Images/Complete Availability Set)
+    ![](./Images/CompleteAvailabilitySet.PNG)
 
 ### Module Summary
 

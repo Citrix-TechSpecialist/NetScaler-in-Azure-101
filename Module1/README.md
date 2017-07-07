@@ -29,7 +29,7 @@ The following figure shows how traffic flows from a client to a server through a
 
 ![](Images/img1.PNG)
 
-##How NetScaler VPX Works on Azure
+## How NetScaler VPX Works on Azure
 
 In an on-premises deployment, a NetScaler VPX instance requires, at least three IP addresses:
 
@@ -47,10 +47,9 @@ To avoid this limitation, you can deploy NetScaler VPX instance in Azure with a 
 
 The following image illustrates how a single IP address is used to perform the functions of NSIP, SNIP, and VIP.
 
-![](./Images/img2)
+![](./Images/img2.PNG)
 
-### Note:
-The single IP mode is available only in Azure deployments. This mode is not available for a NetScaler VPX instance on your premises, on AWS, or in in other type of deployment.
+> Note: The single IP mode is available only in Azure deployments. This mode is not available for a NetScaler VPX instance on your premises, on AWS, or in in other type of deployment.
 
 ## Traffic Flow through Port Address Translation
 
@@ -60,26 +59,25 @@ Any external request is received on the NetScaler VPX VM's virtual NIC. The NIC 
 
 The following figure shows how Azure performs port address translation to direct traffic to the NetScaler internal IP address and private port. 
 
-![](./Images/img3)
+![](./Images/img3.PNG)
 
 In this example, the Public IP address assigned to the VM is 140.x.x.x, and the internal IP address is 10.x.x.x. When the inbound and outbound rules are defined, public HTTP port 80 is defined as the port on which the client requests are received, and a corresponding private port, 10080, is defined as the port on which the NetScaler virtual machine listens. The client request is received on the Public IP address 140.x.x.x at port 80. Azure performs port address translation to map this address and port to internal IP address 10.x.x.x on private port 10080 and forwards the client request.
 
-For information about port usage guidelines while, see [Port Usage Guidelines](http://docs.citrix.com/en-us/netscaler/10-5/vpx/deploy-vpx-on-azure.html).
+For information about port usage guidelines while, see [Port Usage Guidelines](http://docs.citrix.com/en-us/netscaler/10-5/vpx/deploy-vpx-on-azure.html)
 
 For information about NSG and access control lists, see [https://azure.microsoft.com/enin/documentation/articles/virtual-networks-nsg/](https://azure.microsoft.com/enin/documentation/articles/virtual-networks-nsg/).   
 
 ## Traffic Flow Through Network Address Translation 
+
 You can also request a Public IP (PIP) address for your NetScaler virtual machine (instance level). If you use this direct PIP at the VM level, you need not define inbound and outbound rules to intercept the network traffic. The incoming request from the Internet is received on the VM directly. Azure performs network address translation (NAT) and forwards the traffic to the internal IP address of the NetScaler instance.
 
 The following figure shows how Azure performs network address translation to map the NetScaler internal IP address. 
 
-![](./Images/Traffic Flow Through Network Address Translation)
+![](./Images/TrafficFlowThroughNetworkAddressTranslation.PNG)
 
 In this example, the Public IP assigned to the NSG is 140.x.x.x and the internal IP address is 10.x.x.x. When the inbound and outbound rules are defined, public HTTP port 80 is defined as the port on which the client requests are received, and a corresponding private port, 10080, is defined as the port on which the NetScaler virtual machine listens. The client request is received on the Public IP address (140.x.x.x). Azure performs network address translation to map the PIP to the internal IP address 10.x.x.x on port 10080, and forwards the client request. 
 
-### Note 
-
-NetScaler VPX VMs in high availability are controlled by external or internal load balancers that have inbound rules defined on them to control the load balancing traffic. The external traffic is first intercepted by these load balancers and the traffic is diverted according to the load balancing rules configured, which has backend pools, NAT rules, and health probes defined on the load balancers.
+> Note: NetScaler VPX VMs in high availability are controlled by external or internal load balancers that have inbound rules defined on them to control the load balancing traffic. The external traffic is first intercepted by these load balancers and the traffic is diverted according to the load balancing rules configured, which has backend pools, NAT rules, and health probes defined on the load balancers.
 
 ## Port Usage Guidelines
 
@@ -99,11 +97,9 @@ Before configuring NSG rules, note the following guidelines regarding the port n
 
 4. In a NetScaler Gateway deployment, you need not configure a SNIP address, because the NSIP can be used as a SNIP when no SNIP is configured. You must configure the VIP address by using the NSIP address and some nonstandard port number. For call-back configuration on the backend server, the VIP port number has to be specified along with the VIP URL (for example, “https://gatewayFQDN:port”). 
 
-### Note:
-
-In ARM, a NetScaler VPX VM is associated with two IP addresses. Public IP address and Internal IP address. While the external traffic connects to the PIP, the internal IP address or the NSIP is nonroutable. To configure VIP in VPX, use this combination of internal IP address and port number.
+> Note: In ARM, a NetScaler VPX VM is associated with two IP addresses. Public IP address and Internal IP address. While the external traffic connects to the PIP, the internal IP address or the NSIP is nonroutable. To configure VIP in VPX, use this combination of internal IP address and port number.
 
 
-###Example: 
+### Example: 
 
 If the VPN virtual server FQDN is vip.test.com, and the VPN virtual server is running on port 8443, the call-back URL will be: https://vip.test.com:8443. 
