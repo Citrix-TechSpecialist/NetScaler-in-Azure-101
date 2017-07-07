@@ -2,7 +2,8 @@
 
 ## Shortcuts
 
-Go Back to [Table of Contents](../)
+Go Back to [Table of Contents](https://github.com/Citrix-TechSpecialist/NetScaler-in-Azure-101)
+
 Go to [Module 3](../Module3)
 
 ## Overview
