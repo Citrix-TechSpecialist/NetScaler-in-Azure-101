@@ -1,5 +1,10 @@
 # Module 4: Configure the NetScaler
 
+## Shortcuts
+
+Go Back to [Table of Contents](../)
+Go to [Appendix](../LabGuideAppendix)
+
 ## Overview
 
 Configure your NetScaler as the Reverse Proxy.

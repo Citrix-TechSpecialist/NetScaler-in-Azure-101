@@ -1,5 +1,10 @@
 # Module 3: Provision the NetScaler
 
+## Shortcuts
+
+Go Back to [Table of Contents](../)
+Go to [Module 4](../Module4)
+
 ## Overview
 
 Provision a single instance of NetScaler VPX in ARM portal in a standalone mode by creating the virtual machine and configuring other resources.

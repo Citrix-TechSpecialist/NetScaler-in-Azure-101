@@ -1,6 +1,8 @@
 # Module1: NetScaler Instantiation
 
+## Shortcuts
 Go Back to [Table of Contents](../)
+Go to [Module 2](../Module2)
 
 ## Module Overview
 

@@ -1,12 +1,16 @@
 # Lab Guide Appendix
 
+## Shortcuts
+
+Go Back to [Table of Contents](../)
+
 ## Bonus Exercise: Add Encryption to this app with a HTTPS vServer.
 
 ### Overview
 
 NetScaler is a Secure Reverse Proxy doing Layer 7 Request Switching for the above HTTP Application. We could do HTTPs on either side, or both, as needed. Since our Service in this lab is just HTTP, let’s leave it for convenience, but it would make sense to go SSL on both sides, since the client and the server are out on the Internet. Let’s focus on adding SSL to the front side, where we would have the FQDN and Certificate with the DNS forwarding to our NetScaler’s public IP. We can roll at test certificate quickly and add a browser security exception.
 
-### In this exrcise you will:
+### In this exercise you will:
 
 * Configure a HTTPS vServer in front of your proxied application
 

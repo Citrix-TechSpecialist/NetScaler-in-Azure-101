@@ -1,6 +1,9 @@
 # Module 2: Azure Prerequisite Configs for NetScaler
 
+## Shortcuts
+
 Go Back to [Table of Contents](../)
+Go to [Module 3](../Module3)
 
 ## Overview
 
